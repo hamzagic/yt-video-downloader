@@ -28,9 +28,17 @@ On Windows, install `ffmpeg` and make sure `ffmpeg` works in a new terminal. One
 winget install Gyan.FFmpeg
 ```
 
-## Run the Python project
+## Download a video
 
-From the project folder:
+With the virtual environment activated, from the project folder:
+
+```bash
+python download_video.py "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
+The same command works on Windows. The finished file is written to `videos` in the folder where you ran the command. PyInstaller is not involved in this step.
+
+Create the virtual environment once before the first download.
 
 macOS:
 
@@ -38,7 +46,6 @@ macOS:
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python download_video.py "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
 Windows:
@@ -47,31 +54,42 @@ Windows:
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
-python download_video.py "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
-
-The finished file is written to `videos` in the folder where you ran the command.
 
 ## Executable
 
-The executable takes the same URL and does not need a separate Python environment. It still needs `ffmpeg` installed. Build it on the system where it will run. A Mac build does not run on Windows, and a Windows build does not run on a Mac.
+Give someone the executable file. They do not clone this project, install Python, or activate a virtual environment. They put the file anywhere and pass the URL.
 
-macOS, from the project folder with the virtual environment activated:
+macOS, for the Apple Silicon build in `dist/download_video`:
 
 ```bash
-pip install pyinstaller
-pyinstaller --noconfirm download_video.spec
-./dist/download_video "https://www.youtube.com/watch?v=VIDEO_ID"
+./download_video "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
-The Mac executable runs on the same Mac architecture it was built on.
-
-Windows, from the project folder with the virtual environment activated:
+Windows, after `dist\download_video.exe` has been built:
 
 ```bat
+download_video.exe "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
+`ffmpeg` still has to be installed on that computer. The executable includes Python and the download libraries, and it calls `ffmpeg` when a video comes as separate picture and sound tracks. A Mac file does not run on Windows, and a Windows file does not run on a Mac. The Mac file runs on the same Mac architecture it was built on.
+
+The executable is not stored in git. Send the file directly, or attach it to a release. Building it is a separate step and is the only time a virtual environment is used.
+
+macOS:
+
+```bash
+source venv/bin/activate
 pip install pyinstaller
 pyinstaller --noconfirm download_video.spec
-dist\download_video.exe "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
+Windows:
+
+```bat
+venv\Scripts\activate
+pip install pyinstaller
+pyinstaller --noconfirm download_video.spec
 ```
 
 ## Tests
