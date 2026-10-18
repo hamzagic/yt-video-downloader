@@ -22,7 +22,17 @@ On macOS:
 brew install ffmpeg
 ```
 
-On Windows, install `ffmpeg` and make sure `ffmpeg` works in a new terminal. One way to install it is:
+On Linux:
+
+```bash
+sudo apt install ffmpeg
+```
+
+On Fedora and related distributions, use `sudo dnf install ffmpeg` instead. 
+
+On Windows:
+
+Install `ffmpeg` and make sure `ffmpeg` works in a new terminal. One way to install it is:
 
 ```bat
 winget install Gyan.FFmpeg
@@ -36,11 +46,11 @@ With the virtual environment activated, from the project folder:
 python download_video.py "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
-The same command works on Windows. The finished file is written to `videos` in the folder where you ran the command. PyInstaller is not involved in this step.
+The same command works on Linux and Windows. The finished file is written to `videos` in the folder where you ran the command. PyInstaller is not involved in this step.
 
 Create the virtual environment once before the first download.
 
-macOS:
+macOS and Linux:
 
 ```bash
 python3 -m venv venv
