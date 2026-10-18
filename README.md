@@ -30,6 +30,7 @@ sudo apt install ffmpeg
 
 On Fedora and related distributions, use `sudo dnf install ffmpeg` instead. 
 
+
 On Windows:
 
 Install `ffmpeg` and make sure `ffmpeg` works in a new terminal. One way to install it is:
