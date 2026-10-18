@@ -5,6 +5,7 @@ from urllib.error import HTTPError
 
 import pytest
 
+import download_video as cli
 import main
 
 
@@ -287,3 +288,40 @@ def test_merge_failure_is_raised(monkeypatch, tmp_path):
 
     with pytest.raises(subprocess.CalledProcessError):
         main.download_video(SHORTS_URL)
+
+
+def test_frozen_executable_usage_mentions_the_program_name(capsys, monkeypatch):
+    monkeypatch.setattr(cli.sys, "frozen", True, raising=False)
+
+    with pytest.raises(SystemExit):
+        cli.main([])
+
+    assert 'download_video "<url>"' in capsys.readouterr().out
+
+
+def test_windows_executable_usage_uses_the_exe_name(capsys, monkeypatch):
+    monkeypatch.setattr(cli.sys, "frozen", True, raising=False)
+    monkeypatch.setattr(cli.os, "name", "nt")
+
+    with pytest.raises(SystemExit):
+        cli.main([])
+
+    assert 'download_video.exe "<url>"' in capsys.readouterr().out
+
+
+def test_cli_passes_the_url_to_download_video(monkeypatch):
+    seen = []
+    monkeypatch.setattr(cli, "download_video", lambda url: seen.append(url))
+
+    cli.main([SHORTS_URL])
+
+    assert seen == [SHORTS_URL]
+
+
+@pytest.mark.parametrize("arguments", [[], [WATCH_URL, SHORTS_URL]])
+def test_cli_requires_exactly_one_url(capsys, arguments):
+    with pytest.raises(SystemExit) as error:
+        cli.main(arguments)
+
+    assert error.value.code == 1
+    assert 'python download_video.py "<url>"' in capsys.readouterr().out
