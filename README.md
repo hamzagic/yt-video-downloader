@@ -80,7 +80,7 @@ macOS, for the Apple Silicon build in `dist/download_video`:
 Windows, after `dist\download_video.exe` has been built:
 
 ```bat
-download_video.exe "https://www.youtube.com/watch?v=VIDEO_ID"
+./download_video.exe "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
 `ffmpeg` still has to be installed on that computer. The executable includes Python and the download libraries, and it calls `ffmpeg` when a video comes as separate picture and sound tracks. A Mac file does not run on Windows, and a Windows file does not run on a Mac. The Mac file runs on the same Mac architecture it was built on.
