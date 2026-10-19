@@ -54,16 +54,15 @@ def download_video(url: str):
   output_dir = Path("./videos")
   output_dir.mkdir(parents=True, exist_ok=True)
   output_file = output_dir / "video.mp4"
-
   yt = YouTube(url, on_progress_callback=on_progress)
   print(yt.title)
 
   stream = yt.streams.get_highest_resolution()
   if stream is not None:
-      print(f"Downloading {stream.title} to {output_file.name}!!!")
-      stream.download(output_path=str(output_dir), filename=output_dir / stream.title)
+      print(f"Downloading {stream.title} to {output_file.name}!")
+      stream.download(output_path=str(output_file))
   else:
-      print("No stream found, downloading video and audio separately!!!")
+      print("No stream found, downloading video and audio separately!")
       output_file = output_dir / f"{yt.title}.mp4"
       video = (
           yt.streams.filter(only_video=True, file_extension="mp4")
