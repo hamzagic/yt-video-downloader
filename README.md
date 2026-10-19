@@ -85,9 +85,11 @@ download_video.exe "https://www.youtube.com/watch?v=VIDEO_ID"
 
 `ffmpeg` still has to be installed on that computer. The executable includes Python and the download libraries, and it calls `ffmpeg` when a video comes as separate picture and sound tracks. A Mac file does not run on Windows, and a Windows file does not run on a Mac. The Mac file runs on the same Mac architecture it was built on.
 
+# Create the executable file
+
 The executable is not stored in git. Send the file directly, or attach it to a release. Building it is a separate step and is the only time a virtual environment is used.
 
-macOS:
+macOS and Linux:
 
 ```bash
 source venv/bin/activate
